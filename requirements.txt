@@ -1,0 +1,7 @@
+streamlit
+scikit-learn
+numpy
+pandas
+textstat
+langdetect
+googletrans==4.0.0-rc1
