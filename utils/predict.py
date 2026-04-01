@@ -2,7 +2,7 @@ import pickle
 import os
 import re
 import logging
-from googletrans import Translator
+from deep_translator import GoogleTranslator
 from langdetect import detect, detect_langs
 import textstat
 
@@ -11,7 +11,6 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Initialize Translator
-translator = Translator()
 
 # Singleton for model and vectorizer
 _model = None
@@ -128,14 +127,17 @@ def predict_word_level(text):
 
 def translate_to_english(text, src_lang):
     """
-    Translation logic.
+    Translation logic using deep-translator.
     """
     try:
         lang_map = {'English': 'en', 'Tamil': 'ta', 'Hindi': 'hi'}
         src_code = lang_map.get(src_lang, 'auto')
-        translation = translator.translate(text, dest='en', src=src_code)
-        return translation.text
+        
+        # deep-translator usage
+        translation = GoogleTranslator(source=src_code, target='en').translate(text)
+        return translation
     except Exception as e:
+        logger.error(f"Translation error: {e}")
         return "Translation unavailable."
 
 def analyze_complexity(text):
