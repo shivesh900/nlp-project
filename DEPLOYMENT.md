@@ -68,7 +68,28 @@ If you need routing for Single Page Application (SPA), create `frontend/vercel.j
 
 ---
 
-## ✅ Post-Deployment Verification
-- Test the frontend URL.
-- Enter text in English, Tamil, or Hindi.
-- Verify that the detection highlight and translation appear correctly.
+## 🌩️ Streamlit Community Cloud Deployment (Easiest)
+
+This method is recommended for the **NLP Language Intelligence dashboard** (`streamlit_app.py`).
+
+### 1. Prerequisites
+- **GitHub Repository**: Your code MUST be pushed to a public or private GitHub repository.
+- **`requirements.txt`**: Ensure this file is in the root and contains `streamlit`, `scikit-learn`, `googletrans==4.0.0-rc1`, etc.
+- **Model Files**: `model.pkl` and `vectorizer.pkl` must be in the root directory.
+
+### 2. Deployment Steps
+1. Push your code to GitHub:
+   ```bash
+   git add .
+   git commit -m "Prepare for Streamlit deployment"
+   git push origin main
+   ```
+2. Go to [share.streamlit.io](https://share.streamlit.io) and log in with GitHub.
+3. Click **New app** -> **Use existing repo**.
+4. Select your repository and branch.
+5. Set the **Main file path** to `streamlit_app.py`.
+6. Click **Deploy!**
+
+### 3. Troubleshooting
+- **Model not loading**: Ensure `model.pkl` is committed and pushed. Streamlit Cloud has a 1GB limit, but our models are <1MB.
+- **Translation Errors**: `googletrans` can be unstable. If translation fails, check the logs in the Streamlit Cloud dashboard.

@@ -1,6 +1,6 @@
-# Language Detection NLP Backend
+# Language Intelligence & Detection System
 
-A Flask-based backend for high-performance language detection using the `langdetect` library.
+A multi-interface NLP system featuring a high-performance Flask API and a premium Streamlit dashboard for real-time language detection, translation, and text analysis.
 
 ## Project Structure
 ```text
@@ -63,3 +63,22 @@ python app.py
       }
   }
   ```
+---
+
+## 🎨 Interactive Dashboard (Streamlit)
+
+A premium user interface for analyzing text patterns, complexity, and word-level language distribution.
+
+### Features
+- **Real-time Prediction**: Hybrid ML + fallback detection.
+- **Complexity Analysis**: Flesch Reading Ease scores.
+- **Word-Level Breakdown**: Highlighted language detection for individual words.
+- **Automated Translation**: Instant translation to English.
+
+### Local Run
+```bash
+streamlit run streamlit_app.py
+```
+
+### Streamlit Community Cloud
+Visit the live dashboard (if deployed) or follow the [Deployment Guide](DEPLOYMENT.md) to set it up on Streamlit Cloud.
