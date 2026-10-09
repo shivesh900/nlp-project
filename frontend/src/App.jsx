@@ -3,7 +3,7 @@ import LanguageDetector from './components/LanguageDetector';
 
 function App() {
   return (
-    <main className="min-h-screen bg-slate-950 py-12 px-4 selection:bg-primary-500/30">
+    <main className="min-h-screen bg-gray-900 py-6 sm:py-12 px-0 sm:px-4 selection:bg-primary-500/30">
       <LanguageDetector />
       
       <footer className="mt-12 text-center text-gray-600 text-sm">

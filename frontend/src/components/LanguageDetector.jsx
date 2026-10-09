@@ -125,14 +125,14 @@ const LanguageDetector = () => {
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
               <div className="bg-gray-800 p-5 sm:p-6 rounded-2xl border border-gray-700 shadow-xl">
                 <p className="text-gray-400 text-sm font-medium uppercase tracking-wider">Language</p>
-                <p className="text-2xl font-black mt-1" data-testid="language">{result.language}</p>
+                <p className="text-xl sm:text-2xl font-black mt-1" data-testid="language">{result.language}</p>
                 {result.language === 'Unknown' && result.best_guess && (
                   <p className="text-xs text-gray-500 mt-1">best guess: {result.best_guess}</p>
                 )}
               </div>
               <div className="bg-gray-800 p-5 sm:p-6 rounded-2xl border border-gray-700 shadow-xl">
                 <p className="text-gray-400 text-sm font-medium uppercase tracking-wider">Confidence</p>
-                <p className="text-2xl font-black mt-1">{(result.confidence * 100).toFixed(2)}%</p>
+                <p className="text-xl sm:text-2xl font-black mt-1">{(result.confidence * 100).toFixed(2)}%</p>
               </div>
               <div className="bg-gray-800 p-5 sm:p-6 rounded-2xl border border-gray-700 shadow-xl">
                 <p className="text-gray-400 text-sm font-medium uppercase tracking-wider mb-2">Complexity</p>
@@ -147,16 +147,16 @@ const LanguageDetector = () => {
               </div>
               <div className="bg-gray-800 p-5 sm:p-6 rounded-2xl border border-gray-700 shadow-xl">
                 <p className="text-gray-400 text-sm font-medium uppercase tracking-wider">Sentence Type</p>
-                <p className="text-2xl font-bold mt-1">{result.sentenceType}</p>
+                <p className="text-xl sm:text-2xl font-bold mt-1 break-words">{result.sentenceType}</p>
               </div>
               <div className="bg-gray-800 p-5 sm:p-6 rounded-2xl border border-gray-700 shadow-xl">
                 <p className="text-gray-400 text-sm font-medium uppercase tracking-wider">Readability</p>
-                <p className="text-2xl font-bold mt-1">{result.complexity?.score ?? '—'}</p>
+                <p className="text-xl sm:text-2xl font-bold mt-1 break-words">{result.complexity?.score ?? '—'}</p>
                 <p className="text-xs text-gray-500 mt-1">{result.complexity?.note}</p>
               </div>
               <div className="bg-gray-800 p-5 sm:p-6 rounded-2xl border border-gray-700 shadow-xl">
                 <p className="text-gray-400 text-sm font-medium uppercase tracking-wider">Inference</p>
-                <p className="text-2xl font-bold mt-1">{result.ms} ms</p>
+                <p className="text-xl sm:text-2xl font-bold mt-1 break-words">{result.ms} ms</p>
                 <p className="text-xs text-gray-500 mt-1">in your browser, no server</p>
               </div>
             </div>
