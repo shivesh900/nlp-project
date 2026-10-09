@@ -41,14 +41,13 @@ def load_resources():
             
     return _model, _vectorizer
 
-def clean_text(text):
-    """
-    Normalized cleaning.
-    """
-    text = re.sub(r'[!@#$(),\n"%^*?\:;~0-9]', ' ', text)
-    text = re.sub(r'\[\]', ' ', text)
-    text = text.lower()
-    return ' '.join(text.split())
+from utils.text import clean_text  # shared with train_model.py (same cleaning at train and predict time)
+
+LANG_CODES = {
+    'English': 'en', 'Hindi': 'hi', 'Tamil': 'ta', 'Telugu': 'te', 'Kannada': 'kn', 'Malayalam': 'ml',
+    'Bengali': 'bn', 'Marathi': 'mr', 'French': 'fr', 'Spanish': 'es', 'German': 'de',
+}
+CODE_TO_LANG = {v: k for k, v in LANG_CODES.items()}
 
 def is_gibberish(text):
     """
@@ -74,9 +73,8 @@ def detect_external(text):
         probs = detect_langs(text)
         confidence = round(probs[0].prob, 4)
         
-        mapping = {'en': 'English', 'ta': 'Tamil', 'hi': 'Hindi'}
-        return mapping.get(lang_code, lang_code.upper()), confidence
-    except:
+        return CODE_TO_LANG.get(lang_code, lang_code.upper()), confidence
+    except Exception:
         return "Unknown", 0.0
 
 def predict_sentence(text):
@@ -93,8 +91,8 @@ def predict_sentence(text):
         
     vec = vectorizer.transform([cleaned])
     probs = model.predict_proba(vec)[0]
-    confidence = round(max(probs), 4)
-    prediction = model.classes_[probs.argmax()]
+    confidence = round(float(max(probs)), 4)
+    prediction = str(model.classes_[probs.argmax()])
     return prediction, confidence
 
 def predict_word_level(text):
@@ -119,7 +117,7 @@ def predict_word_level(text):
         try:
             vec = vectorizer.transform([cleaned_word])
             probs = model.predict_proba(vec)[0]
-            lang = model.classes_[probs.argmax()]
+            lang = str(model.classes_[probs.argmax()])
             results.append({"word": word, "language": lang})
         except:
             continue
@@ -130,8 +128,9 @@ def translate_to_english(text, src_lang):
     Translation logic using deep-translator.
     """
     try:
-        lang_map = {'English': 'en', 'Tamil': 'ta', 'Hindi': 'hi'}
-        src_code = lang_map.get(src_lang, 'auto')
+        src_code = LANG_CODES.get(src_lang, 'auto')
+        if src_code == 'en':
+            return text
         
         # deep-translator usage
         translation = GoogleTranslator(source=src_code, target='en').translate(text)
@@ -229,7 +228,9 @@ def get_full_prediction(text):
     # 4. Fallback if confidence < 0.7
     if conf < 0.7:
         lang_ext, conf_ext = detect_external(text)
-        if conf_ext > 0:
+        # Only trust the fallback for languages this system supports; langdetect
+        # otherwise labels short or noisy input as e.g. Dutch or Catalan.
+        if conf_ext > 0 and lang_ext in LANG_CODES:
             lang, conf, source = lang_ext, conf_ext, "external"
         
     # 5. Smart 'Unknown' Threshold (User requested: confidence < 0.6 or words < 2)
