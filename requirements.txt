@@ -1,7 +1,15 @@
-streamlit
-scikit-learn
+# Core NLP / ML
+scikit-learn==1.9.1  # pinned: model.pkl was trained with this version
 numpy
 pandas
 textstat
 langdetect
 deep-translator
+# Interfaces
+streamlit
+flask
+flask-cors
+gunicorn
+# Dev / dataset
+requests
+pytest

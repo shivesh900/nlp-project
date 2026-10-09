@@ -36,3 +36,6 @@ Thumbs.db
 # Model files (included in this project)
 # model.pkl
 # vectorizer.pkl
+
+# Local virtualenv
+.venv/
